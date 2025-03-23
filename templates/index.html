@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ovulation Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <div class="bg-white shadow-lg p-8 rounded-xl w-full max-w-md text-center transition-all duration-500">
+    <h1 class="text-2xl font-bold mb-6">Ovulation Predictor</h1>
+
+    <form method="POST" class="space-y-4">
+      <div>
+        <label class="block mb-2 font-semibold">Select Month:</label>
+        <select name="month" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400 transition">
+          {% for month in months %}
+            <option value="{{month}}">{{month}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold">Enter Day:</label>
+        <input type="number" name="day" min="1" max="31" required 
+          class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+      </div>
+
+      <button type="submit" 
+        class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">
+        Predict
+      </button>
+    </form>
+
+    {% if result %}
+      {% if result == "Invalid Input" %}
+        <p class="text-red-500 mt-4">Please check your inputs!</p>
+      {% else %}
+        <div class="bg-green-50 p-4 mt-6 rounded-lg transition-all duration-500">
+          <h2 class="font-bold mb-2">🔮 Results:</h2>
+          <p><strong>Fertile Window:</strong> {{ result['Fertile Window'] }}</p>
+          <p><strong>Ovulation Day:</strong> {{ result['Ovulation Day'] }}</p>
+          <p><strong>Next Period:</strong> {{ result['Next Period'] }}</p>
+          <p class="text-orange-500 font-bold mt-2">🔥 Prime Time: {{ result['Prime Time'] }}</p>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+</body>
+</html>
