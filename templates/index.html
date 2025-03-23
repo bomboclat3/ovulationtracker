@@ -4,15 +4,34 @@
   <meta charset="UTF-8" />
   <title>Ovulation Predictor</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #1c1f26; /* Dark background */
+      color: #e0e0e0;
+    }
+    .blue-accent {
+      color: #70a1ff;
+    }
+    .btn {
+      background-color: #70a1ff;
+    }
+    .btn:hover {
+      background-color: #5a90f0;
+    }
+    .card {
+      background-color: #2b2e35;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
-  <div class="bg-white shadow-lg p-8 rounded-xl w-full max-w-md text-center">
-    <h1 class="text-2xl font-bold mb-6">Ovulation Predictor</h1>
+<body class="flex justify-center items-center min-h-screen">
+
+  <div class="card shadow-lg p-8 rounded-xl w-full max-w-md text-center transition-all duration-500">
+    <h1 class="text-2xl font-bold mb-6 blue-accent">Ovulation Predictor</h1>
 
     <form method="POST" class="space-y-4">
       <div>
         <label class="block mb-2 font-semibold">Select Month:</label>
-        <select name="month" class="w-full p-2 border rounded">
+        <select name="month" class="w-full p-2 rounded bg-gray-700 text-white focus:ring-2 focus:ring-blue-400 transition">
           {% for month in months %}
             <option value="{{ month }}">{{ month }}</option>
           {% endfor %}
@@ -22,23 +41,27 @@
       <div>
         <label class="block mb-2 font-semibold">Enter Day:</label>
         <input type="number" name="day" min="1" max="31" required 
-               class="w-full p-2 border rounded" />
+               class="w-full p-2 rounded bg-gray-700 text-white focus:ring-2 focus:ring-blue-400 transition" />
       </div>
 
-      <button type="submit" class="w-full bg-green-500 text-white py-2 rounded">Predict</button>
+      <button type="submit" class="w-full text-white py-2 rounded btn transition">Predict</button>
     </form>
 
     {% if result %}
       {% if result == "Invalid Input" %}
-        <p class="text-red-500 mt-4">Please check your inputs!</p>
+        <p class="text-red-400 mt-4">Please check your inputs!</p>
       {% else %}
-        <div class="bg-green-50 p-4 mt-6 rounded-lg">
-          <h2 class="font-bold mb-2">Results:</h2>
+        <div class="p-4 mt-6 rounded-lg border border-blue-400">
+          <h2 class="font-bold mb-2 blue-accent">Results:</h2>
           <p><strong>Fertile Window:</strong> {{ result['Fertile Window'] }}</p>
           <p><strong>Ovulation Day:</strong> {{ result['Ovulation Day'] }}</p>
+          <p><strong>Next Period:</strong> {{ result['Next Period'] }}</p>
+          <p class="mt-4 text-lg font-bold text-blue-300">🔥 Best Days to Spit Game:  
+            <span class="blue-accent">{{ result['Prime Time'] }}</span></p>
         </div>
       {% endif %}
     {% endif %}
   </div>
+
 </body>
 </html>
